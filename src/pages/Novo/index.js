@@ -1,21 +1,20 @@
 import React from "react";
-import { useAuth } from "../../contexts/auth";
-import { Formik } from "formik";
-import { useFormik } from "formik";
+import { useState, createContext, useContext, useEffect } from "react";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import TypoGraphy from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/auth";
+import axios from "axios";
 import Button from "@material-ui/core/Button";
 
-const Login = () => {
-  const context = useAuth();
-  console.log(context);
-  function handleLogin() {
-    context.Login();
+function Novo(Props) {
+  const { Logout } = useAuth();
+  async function handleLogout() {
+    Logout();
   }
 
   return (
@@ -26,23 +25,25 @@ const Login = () => {
             <ListItem component="div">
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
-                  Listar Jogadores
+                  <Link to="/" refresh="true">
+                    Listar Jogadores
+                  </Link>
                 </TypoGraphy>
               </ListItemText>
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
-                  Novo Jogador
+                  <Link to="/novo">Novo Jogadores</Link>
                 </TypoGraphy>
               </ListItemText>
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
                   <Button
-                    onClick={handleLogin}
+                    onClick={handleLogout}
                     variant="contained"
                     color="primary"
                     size="medium"
                   >
-                    Login
+                    Sair
                   </Button>
                 </TypoGraphy>
               </ListItemText>
@@ -52,5 +53,6 @@ const Login = () => {
       </AppBar>
     </div>
   );
-};
-export default Login;
+}
+
+export default Novo;
