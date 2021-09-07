@@ -1,15 +1,25 @@
 import React from "react";
 import { useAuth } from "../../contexts/auth";
-import { Formik } from "formik";
+import { Formik, Form } from "formik";
 import { useFormik } from "formik";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import TypoGraphy from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import * as yup from "yup";
+import {
+  Button,
+  TextField,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+  Grid,
+  AppBar,
+  Toolbar,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
 
 const Login = () => {
   const context = useAuth();
@@ -18,12 +28,32 @@ const Login = () => {
     context.Login();
   }
 
+  const { Logout } = useAuth();
+  Logout();
+  async function handleLogout() {
+    Logout();
+  }
+
+  const submitForm = async (values) => {
+    context.Login(values.login, values.senha);
+  };
+
+  const initialValues = {
+    login: "",
+    senha: "",
+  };
+
   return (
     <div>
       <AppBar color="" position="static">
         <Toolbar>
           <List component="nav">
             <ListItem component="div">
+              <ListItemText inset>
+                <TypoGraphy color="inherit" variant="h6">
+                  Home
+                </TypoGraphy>
+              </ListItemText>
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
                   Listar Jogadores
@@ -36,14 +66,46 @@ const Login = () => {
               </ListItemText>
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
-                  <Button
-                    onClick={handleLogin}
-                    variant="contained"
-                    color="primary"
-                    size="medium"
+                  <Formik
+                    initialValues={initialValues}
+                    onSubmit={(values) => submitForm(values)}
                   >
-                    Login
-                  </Button>
+                    {({ handleChange, touched, errors, values }) => (
+                      <Form>
+                        <Grid container spacing={2}>
+                          <Grid item xs={12}>
+                            <TextField
+                              fullWidth
+                              id="login"
+                              name="login"
+                              label="login:"
+                              value={values.login}
+                              onChange={handleChange}
+                            />
+                            <TextField
+                              fullWidth
+                              id="senha"
+                              name="senha"
+                              label="senha:"
+                              value={values.idade}
+                              onChange={handleChange}
+                            />
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <Button
+                              color="primary"
+                              variant="contained"
+                              fullWidth
+                              type="submit"
+                            >
+                              Login
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </Form>
+                    )}
+                  </Formik>
                 </TypoGraphy>
               </ListItemText>
             </ListItem>

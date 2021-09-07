@@ -9,10 +9,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { useAuth } from "../../contexts/auth";
 import axios from "axios";
-import Jogadors from "../Home/Jogadors";
+import Jogadors from "./Jogadors";
 import Button from "@material-ui/core/Button";
 
-function Home(Props) {
+function Listar(Props) {
   const { Logout } = useAuth();
   async function handleLogout() {
     Logout();
@@ -26,14 +26,14 @@ function Home(Props) {
             <ListItem component="div">
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
-                  <p>Home</p>
+                  <Link to="/" refresh="true">
+                    Home
+                  </Link>
                 </TypoGraphy>
               </ListItemText>
               <ListItemText inset>
                 <TypoGraphy color="inherit" variant="h6">
-                  <Link to="/listar" refresh="true">
-                    Listar Jogadores
-                  </Link>
+                  <p>Listar Jogadores</p>
                 </TypoGraphy>
               </ListItemText>
               <ListItemText inset>
@@ -57,8 +57,9 @@ function Home(Props) {
           </List>
         </Toolbar>
       </AppBar>
+      <Jogadors />
     </div>
   );
 }
 
-export default Home;
+export default Listar;

@@ -3,10 +3,10 @@ import api from "../services/api";
 const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  async function Login() {
+  async function Login(login, senha) {
     const response = await api.post("/login", {
-      mail: "john@gmail.com",
-      password: "123456",
+      mail: login,
+      password: senha,
     });
     console.log(response);
     setUser(response.data.user);
